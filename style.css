@@ -52,7 +52,7 @@ html, body {
 .letter {
     object-fit: contain;
     max-width: 100px;
-    width: 90%;    
+    width: 80%;    
     height: 100px;
     transition: transform 0.2s ease, filter 0.2s ease;
     cursor: pointer;
@@ -69,13 +69,24 @@ html, body {
     display: flex;
     flex-direction: row;
     width: 100%;
+    height: auto;
     gap: 10px;
-    padding: 300px 0 0 450px;
+    padding: 300px 0 0 330px;
 }
+
 
 .empty {
     object-fit: contain;
-    max-width: 150px;
-    width: 90%;
-    height: 85px;
+    max-width: 70px;
+    width: 1005;
+    height: 80px;
+    transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+
+
+
+.empty.filled {
+    transition: all 0.2s ease-in-out;
+    transform: scale(1.05);
 }
