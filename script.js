@@ -20,6 +20,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     emptySlots.forEach(slot => {
+
+        slot.setAttribute("draggable", "false");
+
         slot.addEventListener("dragover", e => {
             e.preventDefault();
             slot.style.transform = "scale(1.1)";
