@@ -2,6 +2,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const letters = document.querySelectorAll(".letter");
     const emptySlots = document.querySelectorAll(".empty");
 
+    // 🔹 Assign each letter a unique data-id (so duplicate letters like "O" are treated separately)
+    letters.forEach((letter, index) => {
+        letter.dataset.id = index; 
+    });
 
     letters.forEach(letter => {
         letter.setAttribute("draggable", "true");
@@ -9,6 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
         letter.addEventListener("dragstart", e => {
             e.dataTransfer.setData("text/plain", letter.alt);
             e.dataTransfer.setData("src", letter.src);
+            e.dataTransfer.setData("id", letter.dataset.id); // unique ID to identify this specific letter
             e.target.classList.add("dragging");
         });
 
@@ -16,8 +21,6 @@ document.addEventListener("DOMContentLoaded", () => {
             e.target.classList.remove("dragging");
         });
     });
-
-
 
     emptySlots.forEach(slot => {
 
@@ -39,17 +42,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const draggedLetterAlt = e.dataTransfer.getData("text/plain");
             const draggedSrc = e.dataTransfer.getData("src");
+            const draggedId = e.dataTransfer.getData("id"); // ✅ identify the exact letter dragged
             const targetAlt = slot.alt.toUpperCase().replace("_OUTLINE", "");
 
             if (draggedLetterAlt.toUpperCase().includes(targetAlt)) {
-
                 slot.src = draggedSrc;
                 slot.classList.add("filled");
 
                 slot.removeEventListener("dragover", () => {});
                 slot.removeEventListener("drop", () => {});
 
-                const draggedLetter = [...letters].find(l => l.alt === draggedLetterAlt);
+                const draggedLetter = document.querySelector(`.letter[data-id="${draggedId}"]`);
                 if (draggedLetter) {
                     draggedLetter.style.opacity = "0.3";
                     draggedLetter.setAttribute("draggable", "false");
@@ -57,7 +60,4 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     });
-
-
-
 });
